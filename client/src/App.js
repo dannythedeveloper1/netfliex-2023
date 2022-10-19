@@ -2,7 +2,7 @@ import './App.css';
 import axios from './axios';
 import Banner from './Banner';
 import Nav from './Nav';
-import requests from './requests';
+import requests from '../../server/routes';
 import Row from './Row';
 
 
