@@ -15,8 +15,8 @@ const requests = {
     fetchDocumentaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
 };
 
-const dictionary = (word) => {
-    console.log(requests[word])
+const movies = (word) => {
+    // console.log(requests[word])
     return (axios.get(`${base_url}${requests[word]}`)
         .then(res => {
             console.log('hello');
@@ -25,13 +25,9 @@ const dictionary = (word) => {
         .catch(error => console.log(error))
     );
 }
-// router.get("/api/dictionary/:searchTerm", async (req, res) => {
 router.get(`/api/:searchTerm`, async (req, res) => {
     try {
-        // console.log("hello")
-        // res.json('hello world');
-        console.log('dictionary', req.params.searchTerm);
-        res.json(await dictionary(req.params.searchTerm));
+        res.json(await movies(req.params.searchTerm));
     } catch (err) {
         res.json(err);
     }
