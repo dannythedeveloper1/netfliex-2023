@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./Row.css";
-import axios from "./axios";
+import axios from "axios";
 import movieTrailer from 'movie-trailer';
 import YouTube from 'react-youtube';
 
@@ -14,7 +14,8 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
     useEffect(() => {
         (async () => {
             try {
-                const request = await axios.get(fetchUrl);
+                console.log(fetchUrl)
+                const request = await axios.get(`http://localhost:4000/api/${fetchUrl}`);
                 console.log(request)
                 setMovie(request.data.results);
             } catch (error) {
@@ -50,7 +51,7 @@ const Row = ({ title, fetchUrl, isLargeRow }) => {
         <div className="row">
             <h1>{title}</h1>
             <div className="row__posters">
-                {movies.map((movie, index) => (
+                {movies?.map((movie, index) => (
                     <img
                         onClick={() => handleClick(movie)}
                         key={index} src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} alt={movie.name} className={`row__poster ${isLargeRow && "row__posterLarge"}`}

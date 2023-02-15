@@ -1,5 +1,9 @@
+const router = require('express').Router();
 require('dotenv').config();
-const API_KEY = process.env.apikey;
+const axios = require('axios');
+const API_KEY = process.env.api_key;
+const base_url = "https://api.themoviedb.org/3";
+
 const requests = {
     fetchTrending: `/trending/all/week?api_key=${API_KEY}&language=en-US`,
     fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
@@ -11,4 +15,25 @@ const requests = {
     fetchDocumentaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
 };
 
-module.exports = requests;
+const dictionary = (word) => {
+    console.log(requests[word])
+    return (axios.get(`${base_url}${requests[word]}`)
+        .then(res => {
+            console.log('hello');
+            return res.data
+        })
+        .catch(error => console.log(error))
+    );
+}
+// router.get("/api/dictionary/:searchTerm", async (req, res) => {
+router.get(`/api/:searchTerm`, async (req, res) => {
+    try {
+        // console.log("hello")
+        // res.json('hello world');
+        console.log('dictionary', req.params.searchTerm);
+        res.json(await dictionary(req.params.searchTerm));
+    } catch (err) {
+        res.json(err);
+    }
+});
+module.exports = router;
