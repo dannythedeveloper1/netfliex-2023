@@ -16,10 +16,10 @@ const requests = {
 };
 
 const movies = (word) => {
-    // console.log(requests[word])
+    console.log(requests[word])
     return (axios.get(`${base_url}${requests[word]}`)
         .then(res => {
-            console.log('hello');
+            // console.log('hello');
             return res.data
         })
         .catch(error => console.log(error))
@@ -27,6 +27,7 @@ const movies = (word) => {
 }
 router.get(`/api/:searchTerm`, async (req, res) => {
     try {
+        // console.log(req.params.searchTerm)
         res.json(await movies(req.params.searchTerm));
     } catch (err) {
         res.json(err);
